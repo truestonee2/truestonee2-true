@@ -4,11 +4,12 @@ import { CodeIcon } from './icons/CodeIcon';
 interface CodeInputProps {
   value: string;
   onChange: (value: string) => void;
+  onClearCode: () => void;
   onClearAll: () => void;
   t: (key: string) => string;
 }
 
-const CodeInput: React.FC<CodeInputProps> = ({ value, onChange, onClearAll, t }) => {
+const CodeInput: React.FC<CodeInputProps> = ({ value, onChange, onClearCode, onClearAll, t }) => {
   return (
     <div className="bg-gray-800 rounded-lg shadow-lg flex flex-col h-full">
       <div className="flex items-center justify-between p-4 border-b border-gray-700">
@@ -19,7 +20,7 @@ const CodeInput: React.FC<CodeInputProps> = ({ value, onChange, onClearAll, t })
         {value && (
             <div className="flex items-center gap-2">
                  <button
-                    onClick={() => onChange('')}
+                    onClick={onClearCode}
                     className="text-sm text-gray-400 hover:text-white transition-colors"
                     >
                     {t('clear_code_button')}

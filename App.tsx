@@ -58,6 +58,11 @@ const App: React.FC = () => {
     setError(null);
     setPromptHistory([]);
   }, []);
+
+  const handleClearCode = useCallback(() => {
+    setP5Code('');
+    setGeneratedPrompt('');
+  }, []);
   
   const spinner = useMemo(() => (
     <>
@@ -78,6 +83,7 @@ const App: React.FC = () => {
             <CodeInput 
               value={p5Code} 
               onChange={setP5Code} 
+              onClearCode={handleClearCode}
               onClearAll={handleClearAll}
               t={t}
             />
