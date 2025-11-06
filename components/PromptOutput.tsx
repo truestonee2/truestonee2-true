@@ -5,11 +5,15 @@ import FileUploader from './FileUploader';
 import { ImageIcon } from './icons/ImageIcon';
 import { VideoIcon } from './icons/VideoIcon';
 import { MusicIcon } from './icons/MusicIcon';
+import { PromptVariationType } from '../services/geminiService';
+import { SpinnerIcon } from './icons/SpinnerIcon';
 
 interface PromptOutputProps {
   prompt: string;
   onPromptChange: (value: string) => void;
   isLoading: boolean;
+  isVariationLoading: boolean;
+  onGenerateVariation: (variationType: PromptVariationType) => void;
   error: string | null;
   imageFile: File | null;
   videoFile: File | null;
@@ -23,7 +27,9 @@ interface PromptOutputProps {
 const PromptOutput: React.FC<PromptOutputProps> = ({ 
     prompt, 
     onPromptChange, 
-    isLoading, 
+    isLoading,
+    isVariationLoading,
+    onGenerateVariation,
     error,
     imageFile,
     videoFile,
@@ -48,6 +54,12 @@ const PromptOutput: React.FC<PromptOutputProps> = ({
             return () => clearTimeout(timer);
         }
     }, [copied]);
+
+    const variationButtons: {labelKey: string, type: PromptVariationType}[] = [
+        { labelKey: 'variation_cinematic', type: 'cinematic' },
+        { labelKey: 'variation_whimsical', type: 'whimsical' },
+        { labelKey: 'variation_concise', type: 'concise' },
+    ];
 
   return (
     <div className="bg-gray-800 rounded-lg shadow-lg flex flex-col h-full">
@@ -93,9 +105,35 @@ const PromptOutput: React.FC<PromptOutputProps> = ({
             readOnly={isLoading || !!error}
             placeholder=""
             className="w-full h-full bg-transparent text-gray-200 resize-none focus:outline-none text-base leading-relaxed"
-            style={{ minHeight: '200px' }}
+            style={{ minHeight: '150px' }}
         />
       </div>
+      
+      {prompt && !isLoading && !error && (
+          <div className="px-4 pb-4">
+              <div className="border-t border-gray-700 pt-4">
+                  <h3 className="text-md font-semibold text-gray-300 mb-3">{t('prompt_variations_title')}</h3>
+                  {isVariationLoading ? (
+                      <div className="flex items-center justify-center text-gray-400 py-2">
+                          <SpinnerIcon className="w-5 h-5 mr-2" />
+                          {t('generating_variation')}
+                      </div>
+                  ) : (
+                      <div className="flex flex-wrap gap-2">
+                          {variationButtons.map(vb => (
+                            <button
+                                key={vb.type}
+                                onClick={() => onGenerateVariation(vb.type)}
+                                className="px-3 py-1.5 bg-gray-700/80 text-gray-300 rounded-full text-sm hover:bg-gray-600 hover:text-white transition-colors"
+                            >
+                                {t(vb.labelKey)}
+                            </button>
+                          ))}
+                      </div>
+                  )}
+              </div>
+          </div>
+      )}
 
       <div className="p-4 border-t border-gray-700">
         <h3 className="text-md font-semibold text-gray-300 mb-3">{t('prompt_assets_title')}</h3>

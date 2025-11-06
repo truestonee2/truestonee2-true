@@ -24,7 +24,7 @@ const PromptHistory: React.FC<PromptHistoryProps> = ({ history, onReuse, onClear
         <button
             onClick={(e) => {
                 e.stopPropagation(); // Prevent accordion from toggling
-                if (window.confirm('Are you sure you want to clear the history?')) {
+                if (window.confirm(t('confirm_clear_history'))) {
                      onClearHistory();
                 }
             }}

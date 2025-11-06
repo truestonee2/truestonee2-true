@@ -10,6 +10,19 @@ export const translations = {
     clear_code_button: '코드 지우기',
     reset_all_button: '전체 초기화',
     code_input_placeholder: `// P5.js 스케치 코드를 여기에 붙여넣으세요...\n\nfunction setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(220);\n  ellipse(50, 50, 80, 80);\n}`,
+    
+    // AI Code Assist
+    ai_code_assist_button: 'AI 코드 지원',
+    ai_code_assist_tooltip: 'AI로 코드 개선, 변형 또는 설명 보기',
+    assist_modal_title: 'AI 코드 지원',
+    assist_refactor: '코드 리팩토링',
+    assist_interactive: '인터랙션 추가 (마우스)',
+    assist_creative: '창의적인 변형 제안',
+    assist_explain: '코드 설명',
+    assist_apply_code: '코드 적용',
+    assist_close: '닫기',
+    assist_explanation_title: '코드 설명',
+    assist_new_code_title: '제안된 코드',
 
     // Generation Options
     generation_options_title: '생성 옵션',
@@ -59,6 +72,13 @@ export const translations = {
     generating_prompt_message: '프롬프트 생성 중...',
     prompt_output_placeholder: '생성된 비디오 프롬프트가 여기에 표시됩니다.',
     
+    // Prompt Variations
+    prompt_variations_title: '프롬프트 변형 생성',
+    variation_cinematic: '더 시네마틱하게',
+    variation_whimsical: '더 기발하게',
+    variation_concise: '더 간결하게',
+    generating_variation: '변형 생성 중...',
+
     // Prompt Assets
     prompt_assets_title: '프롬프트 에셋',
     asset_image: '이미지',
@@ -74,6 +94,7 @@ export const translations = {
     history_empty_placeholder: '아직 생성된 기록이 없습니다.',
     reuse_button: '재사용',
     clear_history_button: '기록 지우기',
+    confirm_clear_history: '정말로 기록을 지우시겠습니까?',
 
     // Footer
     footer_powered_by: 'Gemini 제공',
@@ -84,6 +105,8 @@ export const translations = {
     error_generation_failed: '프롬프트 생성에 실패했습니다. API 키와 네트워크 연결을 확인해주세요.',
     error_ai_recommendation: 'AI 추천을 받아오는 데 실패했습니다: ',
     error_invalid_file_type: '잘못된 파일 형식입니다. 다음 형식만 허용됩니다:',
+    error_code_assist_failed: 'AI 코드 지원에 실패했습니다.',
+    error_variation_failed: '프롬프트 변형 생성에 실패했습니다.',
 
     // Prompt Template translations
     prompt_constraints_header: "프롬프트 생성 시 다음 제약 조건을 준수해 주세요:",
@@ -136,6 +159,19 @@ export const translations = {
     clear_code_button: 'Clear Code',
     reset_all_button: 'Reset All',
     code_input_placeholder: `// Paste your P5.js sketch code here...\n\nfunction setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(220);\n  ellipse(50, 50, 80, 80);\n}`,
+    
+    // AI Code Assist
+    ai_code_assist_button: 'AI Code Assist',
+    ai_code_assist_tooltip: 'Improve, vary, or explain code with AI',
+    assist_modal_title: 'AI Code Assistance',
+    assist_refactor: 'Refactor Code',
+    assist_interactive: 'Add Interaction (Mouse)',
+    assist_creative: 'Suggest Creative Variation',
+    assist_explain: 'Explain Code',
+    assist_apply_code: 'Apply Code',
+    assist_close: 'Close',
+    assist_explanation_title: 'Code Explanation',
+    assist_new_code_title: 'Suggested Code',
 
     // Generation Options
     generation_options_title: 'Generation Options',
@@ -185,6 +221,13 @@ export const translations = {
     generating_prompt_message: 'Generating prompt...',
     prompt_output_placeholder: 'Your generated video prompt will appear here.',
     
+    // Prompt Variations
+    prompt_variations_title: 'Generate Prompt Variations',
+    variation_cinematic: 'More Cinematic',
+    variation_whimsical: 'More Whimsical',
+    variation_concise: 'More Concise',
+    generating_variation: 'Generating variation...',
+
     // Prompt Assets
     prompt_assets_title: 'Prompt Assets',
     asset_image: 'Image',
@@ -200,6 +243,7 @@ export const translations = {
     history_empty_placeholder: 'No generation history yet.',
     reuse_button: 'Reuse',
     clear_history_button: 'Clear History',
+    confirm_clear_history: 'Are you sure you want to clear the history?',
 
     // Footer
     footer_powered_by: 'Powered by Gemini',
@@ -210,6 +254,9 @@ export const translations = {
     error_generation_failed: 'Failed to generate prompt. Please check your API key and network connection.',
     error_ai_recommendation: 'Failed to get AI recommendations: ',
     error_invalid_file_type: 'Invalid file type. Only the following formats are allowed:',
+    error_code_assist_failed: 'Failed to get AI code assistance.',
+    error_variation_failed: 'Failed to generate prompt variation.',
+
 
     // Prompt Template translations
     prompt_constraints_header: "Please adhere to the following constraints when generating the prompt:",

@@ -4,7 +4,7 @@ import CodeInput from './components/CodeInput';
 import PromptOutput from './components/PromptOutput';
 import GenerationOptions, { GenerationOptionsState, initialOptions } from './components/GenerationOptions';
 import PromptHistory from './components/PromptHistory';
-import { generateVideoPromptFromCode } from './services/geminiService';
+import { generateVideoPromptFromCode, getPromptVariation, PromptVariationType } from './services/geminiService';
 import { useLocalization } from './hooks/useLocalization';
 
 const App: React.FC = () => {
@@ -13,6 +13,7 @@ const App: React.FC = () => {
   const [p5Code, setP5Code] = useState<string>('');
   const [generatedPrompt, setGeneratedPrompt] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isVariationLoading, setIsVariationLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [options, setOptions] = useState<GenerationOptionsState>(initialOptions);
   
@@ -47,6 +48,24 @@ const App: React.FC = () => {
       setIsLoading(false);
     }
   }, [p5Code, options, imageFile, videoFile, audioFile, t]);
+  
+  const handleGenerateVariation = useCallback(async (variationType: PromptVariationType) => {
+      if (!generatedPrompt) return;
+      
+      setIsVariationLoading(true);
+      setError(null);
+      
+      try {
+          const newPrompt = await getPromptVariation(generatedPrompt, variationType, options.promptLanguage);
+          setGeneratedPrompt(newPrompt);
+          setPromptHistory(prev => [newPrompt, ...prev.filter(p => p !== generatedPrompt)]);
+      } catch (err) {
+          console.error(err);
+          setError(t('error_variation_failed'));
+      } finally {
+          setIsVariationLoading(false);
+      }
+  }, [generatedPrompt, options.promptLanguage, t]);
 
   const handleClearAll = useCallback(() => {
     setP5Code('');
@@ -109,6 +128,8 @@ const App: React.FC = () => {
               prompt={generatedPrompt}
               onPromptChange={setGeneratedPrompt}
               isLoading={isLoading}
+              isVariationLoading={isVariationLoading}
+              onGenerateVariation={handleGenerateVariation}
               error={error}
               imageFile={imageFile}
               videoFile={videoFile}

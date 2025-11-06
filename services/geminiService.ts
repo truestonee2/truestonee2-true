@@ -216,3 +216,69 @@ export const getAiRecommendations = async (code: string, type: RecommendationTyp
         throw new Error(`Failed to get AI recommendations for ${type}.`);
     }
 };
+
+export type CodeAssistType = 'refactor' | 'interactive' | 'creative' | 'explain';
+
+export const getAiCodeAssistance = async (
+    code: string, 
+    assistType: CodeAssistType
+): Promise<string> => {
+    let instruction = '';
+    switch(assistType) {
+        case 'refactor':
+            instruction = 'Refactor the following P5.js code to improve its readability, performance, and structure. Maintain the original functionality. Only output the raw code, without any explanation.';
+            break;
+        case 'interactive':
+            instruction = 'Add mouse interaction (e.g., using mouseX, mouseY) to the following P5.js code to make it more dynamic and engaging. Maintain the core visual idea. Only output the raw code, without any explanation.';
+            break;
+        case 'creative':
+            instruction = 'Take the following P5.js code and suggest a creative variation. This could involve changing colors, motion, shapes, or adding a new concept, while keeping the spirit of the original. Only output the raw code, without any explanation.';
+            break;
+        case 'explain':
+            instruction = 'Explain the following P5.js code in a clear and concise way, as if you were explaining it to a beginner. Describe the setup() function and what happens in the draw() loop.';
+            break;
+    }
+
+    const response = await ai.models.generateContent({
+        model: "gemini-2.5-pro",
+        contents: `${instruction}\n\nCode:\n\`\`\`javascript\n${code}\n\`\`\``,
+        config: {
+            systemInstruction: 'You are an expert P5.js developer and assistant. You provide helpful code modifications and explanations.',
+            temperature: 0.5,
+        }
+    });
+    return response.text.trim();
+}
+
+export type PromptVariationType = 'cinematic' | 'whimsical' | 'concise';
+
+export const getPromptVariation = async (
+    prompt: string,
+    variationType: PromptVariationType,
+    language: string
+): Promise<string> => {
+    let instruction = '';
+    switch(variationType) {
+        case 'cinematic':
+            instruction = 'Rewrite the following video prompt to be more cinematic, focusing on camera angles, lighting, and dramatic motion.';
+            break;
+        case 'whimsical':
+            instruction = 'Rewrite the following video prompt to be more whimsical and playful, using imaginative and fantastical language.';
+            break;
+        case 'concise':
+            instruction = 'Rewrite the following video prompt to be more concise and punchy, capturing the essence in fewer words while remaining vivid.';
+            break;
+    }
+    const langInstruction = language === 'Korean' ? 'The final output must be in Korean.' : 'The final output must be in English.';
+
+    const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: `${instruction}\n\nOriginal Prompt: "${prompt}"\n\n${langInstruction}`,
+        config: {
+            systemInstruction: 'You are an expert creative prompt engineer for text-to-video AI models.',
+            temperature: 0.9,
+        }
+    });
+
+    return response.text.trim().replace(/^"|"$/g, ''); // Remove quotes from response
+};
